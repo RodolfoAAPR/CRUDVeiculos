@@ -3,21 +3,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main{
-    public static Veiculo buscarPorPlaca(ArrayList<Veiculo> listaVeiculos, String placa) {
-        for (Veiculo v : listaVeiculos) {
-            if (v.getPlaca().equalsIgnoreCase(placa)) {
-                return v;
-            }
-        }
-        return null;
-    }
+
         public static void main(String[] args) {
             ArrayList<Veiculo> listaVeiculos = new ArrayList<>();
             Scanner scanner = new Scanner(System.in);
+            ManipulacaoDados.carregarDados(listaVeiculos);
             int opcao = 10;
 
 
-            while(opcao != 0){
+            while(opcao != 0) {
                 try {
                     System.out.println("**************************************");
                     System.out.println("SEJA VEM VINDO AO SISTEMA DE VEÍCULOS");
@@ -33,7 +27,8 @@ public class Main{
                     opcao = scanner.nextInt();
                     scanner.nextLine();
 
-                    if(opcao == 1) {
+                    if (opcao == 1) {
+                        System.out.println();
                         System.out.println("**************************************");
                         System.out.println("SEJA VEM VINDO AO CADASTRO DE VEÍCULOS");
                         System.out.println("**************************************");
@@ -50,7 +45,7 @@ public class Main{
                             System.out.print("Insira a placa: ");
                             String placa = scanner.nextLine();
 
-                            if(buscarPorPlaca(listaVeiculos, placa) != null){
+                            if (Busca.buscarPorPlaca(listaVeiculos, placa) != null) {
                                 System.out.println("Veículo presente no sistema.");
                                 continue;
                             }
@@ -63,7 +58,8 @@ public class Main{
                             System.out.printf("Moto %s cadastrada com sucesso!\n", placa);
                             veiculo = new Moto(placa, marca, modelo);
                             listaVeiculos.add(veiculo);
-                        } else if(tipo == 2){
+                            ManipulacaoDados.salvarDados(listaVeiculos);
+                        } else if (tipo == 2) {
                             System.out.println();
                             System.out.print("Insira a placa: ");
                             String placa = scanner.nextLine();
@@ -71,7 +67,7 @@ public class Main{
                             String marca = scanner.nextLine();
                             System.out.print("Insira o modelo: ");
                             String modelo = scanner.nextLine();
-                            System.out.printf("Carro %s cadastrado com sucesso!", placa);
+                            System.out.printf("Carro %s cadastrado com sucesso!\n", placa);
                             veiculo = new Carro(placa, marca, modelo);
                             listaVeiculos.add(veiculo);
                         } else {
@@ -81,30 +77,32 @@ public class Main{
                         }
                     }
 
-                }catch (InputMismatchException error){
+                } catch (InputMismatchException error) {
                     System.out.println("A opção deve ser somente números!");
                     break;
-                } if(opcao == 2){
+                }
+                if (opcao == 2) {
                     System.out.println("Listagem de veículos!");
 
-                    if(listaVeiculos.isEmpty()) {
+                    if (listaVeiculos.isEmpty()) {
                         System.out.println("Não há nenhum veículo cadastrado!");
-                    }else {
+                    } else {
                         for (Veiculo veiculo : listaVeiculos) {
+                            System.out.println("--------------------");
                             veiculo.exibirDados();
                             System.out.println("--------------------");
                         }
                     }
-                }else if(opcao == 3){
+                } else if (opcao == 3) {
                     System.out.print("Insira a placa do veículo que deseja atualizar: ");
                     String placaBusca = scanner.nextLine();
 
-                    Veiculo veiculo = buscarPorPlaca(listaVeiculos, placaBusca);
+                    Veiculo veiculo = Busca.buscarPorPlaca(listaVeiculos, placaBusca);
 
-                    if(veiculo == null){
+                    if (veiculo == null) {
                         System.out.println("O veículo não está cadastrado no sistema.");
                     }
-                    try{
+                    try {
                         System.out.print("Insira a nova placa: ");
                         String placa = scanner.nextLine();
                         veiculo.setMarca(placa);
@@ -115,11 +113,44 @@ public class Main{
                         String modelo = scanner.nextLine();
                         veiculo.setModelo(modelo);
                         System.out.println("Dados atualizados com sucesso!");
-                    }catch (Exception error){
+                    } catch (Exception error) {
                         System.out.println(error.getMessage());
                     }
-                }
-        }
+                    ManipulacaoDados.salvarDados(listaVeiculos);
+                } else if (opcao == 4) {
+                    System.out.print("Insira a placa do veículo que deseja remover: ");
+                    String placaBusca = scanner.nextLine();
 
+                    Veiculo veiculo = Busca.buscarPorPlaca(listaVeiculos, placaBusca);
+
+                    if(veiculo != null){
+                        listaVeiculos.remove(veiculo);
+                        System.out.println();
+                        System.out.printf("Veículo com a placa %s foi removido com sucesso!", placaBusca);
+                        System.out.println();
+                    } else {
+                        System.out.println("Veículo não está presente no cadastro!");
+                    }
+                    ManipulacaoDados.salvarDados(listaVeiculos);
+                } else if (opcao == 5){
+                    System.out.println();
+                    System.out.println("********************");
+                    System.out.println("BEM VINDO À OFICINA!");
+                    System.out.println("********************");
+                    System.out.println();
+
+                    System.out.print("Insira a placa do veículo que deseja consertar: ");
+                    String placaBusca = scanner.nextLine();
+
+                    Veiculo veiculo = Busca.buscarPorPlaca(listaVeiculos, placaBusca);
+
+                    if(veiculo == null){
+                        System.out.println("Veículo não cadastrado!");
+                    } else {
+                        ((OperacoesVeiculo) veiculo).realizarManutencao();
+                    }
+                }
+            }
+            scanner.close();
     }
 }

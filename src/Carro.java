@@ -14,6 +14,8 @@ public class Carro extends Veiculo implements OperacoesVeiculo {
 
     @Override
     public void realizarManutencao() {
+        System.out.println();
         System.out.printf("O veículo com a placa %s foi consertado!", getPlaca());
+        System.out.println();
     }
 }
