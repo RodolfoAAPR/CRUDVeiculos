@@ -105,7 +105,7 @@ public class Main{
                     try {
                         System.out.print("Insira a nova placa: ");
                         String placa = scanner.nextLine();
-                        veiculo.setMarca(placa);
+                        veiculo.setPlaca(placa);
                         System.out.print("Insira a nova marca: ");
                         String marca = scanner.nextLine();
                         veiculo.setMarca(marca);
