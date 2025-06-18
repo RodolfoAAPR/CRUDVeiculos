@@ -35,7 +35,9 @@ public abstract class Veiculo {
 
     public abstract void exibirDados();
 
-    public String CadastroConcluido(){
-        return "Veículo cadastrado com sucesso!";
+    public void cadastroConcluido(){
+        System.out.println();
+        System.out.printf("Veículo %s cadastrado com sucesso!", placa);
+        System.out.println();
     }
 }
