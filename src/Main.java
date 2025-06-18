@@ -55,8 +55,8 @@ public class Main{
                             System.out.print("Insira o modelo: ");
                             String modelo = scanner.nextLine();
 
-                            System.out.printf("Moto %s cadastrada com sucesso!\n", placa);
                             veiculo = new Moto(placa, marca, modelo);
+                            veiculo.cadastroConcluido();
                             listaVeiculos.add(veiculo);
                             ManipulacaoDados.salvarDados(listaVeiculos);
                         } else if (tipo == 2) {
@@ -67,9 +67,11 @@ public class Main{
                             String marca = scanner.nextLine();
                             System.out.print("Insira o modelo: ");
                             String modelo = scanner.nextLine();
-                            System.out.printf("Carro %s cadastrado com sucesso!\n", placa);
+
                             veiculo = new Carro(placa, marca, modelo);
+                            veiculo.cadastroConcluido();
                             listaVeiculos.add(veiculo);
+                            ManipulacaoDados.salvarDados(listaVeiculos);
                         } else {
                             System.out.println();
                             System.out.println("Opção inválida! Tente novamente!");
